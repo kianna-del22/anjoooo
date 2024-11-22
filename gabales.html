@@ -1,0 +1,367 @@
+<html><head><base href="." />
+<style>
+  /* Keeping all previous styles the same up to the bubble animations */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Special+Elite&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(45deg, #e6d5c3, #d4b59d, #c49a7c);
+    position: relative;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.2'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.2;
+    mix-blend-mode: overlay;
+  }
+
+  .vintage-objects {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    background: rgba(255, 249, 230, 0.95);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(139, 69, 19, 0.25),
+                inset 0 0 25px rgba(139, 69, 19, 0.1);
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    z-index: 1;
+    border: 3px solid rgba(139, 69, 19, 0.3);
+    background-image: 
+      linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%),
+      repeating-linear-gradient(45deg, rgba(139, 69, 19, 0.05) 0px, rgba(139, 69, 19, 0.05) 1px, transparent 1px, transparent 10px);
+    backdrop-filter: blur(10px);
+    transform: perspective(1000px) rotateX(0.5deg);
+    transition: transform 0.3s ease;
+  }
+
+  .logo {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .logo::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(139, 69, 19, 0.3), transparent);
+  }
+
+  .logo h1 {
+    font-family: 'Special Elite', cursive;
+    color: #8b4513;
+    margin-top: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(139, 69, 19, 0.2);
+    letter-spacing: 1px;
+  }
+
+  .form-group {
+    margin-bottom: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .form-group::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(139, 69, 19, 0.2), transparent);
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #8b4513;
+    font-weight: 500;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.1rem;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(210, 105, 30, 0.5);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 249, 230, 0.9);
+    box-shadow: inset 0 2px 4px rgba(139, 69, 19, 0.1);
+  }
+
+  .form-group input:focus {
+    border-color: #8b4513;
+    outline: none;
+    background: rgba(255, 249, 230, 1);
+    box-shadow: inset 0 2px 4px rgba(139, 69, 19, 0.15),
+                0 0 10px rgba(139, 69, 19, 0.1);
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(145deg, #8b4513, #6b3410);
+    border: none;
+    border-radius: 8px;
+    color: #fff9e6;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Special Elite', cursive;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(145deg, #6b3410, #8b4513);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  }
+
+  .links {
+    margin-top: 2rem;
+    text-align: center;
+    position: relative;
+    padding: 1rem 0;
+  }
+
+  .links::before {
+    content: '✦';
+    position: absolute;
+    left: 20%;
+    color: rgba(139, 69, 19, 0.4);
+  }
+
+  .links::after {
+    content: '✦';
+    position: absolute;
+    right: 20%;
+    color: rgba(139, 69, 19, 0.4);
+  }
+
+  .links a {
+    color: #8b4513;
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: 'Special Elite', cursive;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .links a:hover {
+    color: #6b3410;
+  }
+
+  .links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #8b4513;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Keep all animations unchanged */
+  @keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+
+  @keyframes sway {
+    0% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    100% { transform: rotate(-5deg); }
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+  }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.2));
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    animation: float-bubble var(--float-time) linear infinite;
+    bottom: -20px;
+    box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.7),
+                inset -2px -2px 5px rgba(255, 255, 255, 0.5),
+                0 0 10px rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 0;
+  }
+
+  @keyframes float-bubble {
+    0% { 
+      transform: translateY(120vh) translateX(0) scale(1);
+      opacity: 0.7;
+    }
+    100% { 
+      transform: translateY(-20vh) translateX(var(--x-drift)) scale(1.2);
+      opacity: 0;
+    }
+  }
+
+  .bubble-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* Additional elegant background elements */
+  .background-pattern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 30%),
+      radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>
+</head>
+<body>
+  <div class="background-pattern"></div>
+  <div class="vintage-objects">
+    <div id="bubbles" class="bubble-container"></div>
+  </div>
+
+  <div class="container">
+    <div class="logo">
+      <svg width="80" height="80" viewBox="0 0 1024 1024" style="animation: float 4s ease-in-out infinite">
+        <path d="M512 0C229.23 0 0 229.23 0 512c0 255.554 187.231 467.37 432.09 505.73V660.477H302.17V512h129.92v-112.47c0-128.32 76.438-199.19 193.39-199.19 56.017 0 114.69 10.015 114.69 10.015v126.07h-64.562c-63.615 0-83.438 39.354-83.438 79.77V512h141.94l-22.699 148.477H591.98v357.253C836.769 979.37 1024 767.554 1024 512 1024 229.23 794.77 0 512 0z" 
+              fill="#1877f2"/>
+      </svg>
+      <h1>Create Account</h1>
+    </div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+      </div>
+      
+      <button type="submit" class="submit-btn">Sign Up</button>
+    </form>
+    
+    <div class="links">
+      <a href="https://example.com/forgot-password">Forgot Password?</a>
+      <span style="margin: 0 0.5rem;">•</span>
+      <a href="https://example.com/login">Already have an account?</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      console.log('Sign up attempt:', { email, password });
+      if (email && password) {
+        alert('Account created successfully! (This is a demo)');
+      } else {
+        alert('Please fill in all fields');
+      }
+    });
+
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'translateX(5px)';
+      });
+      input.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'translateX(0)';
+      });
+    });
+
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      
+      // Randomize bubble properties
+      const size = Math.random() * 100 + 20; // Larger size range
+      const xPos = Math.random() * 100;
+      const xDrift = (Math.random() - 0.5) * 300; // More horizontal drift
+      const duration = Math.random() * 15 + 10; // Longer duration
+      
+      bubble.style.width = `${size}px`;
+      bubble.style.height = `${size}px`;
+      bubble.style.left = `${xPos}%`;
+      bubble.style.setProperty('--x-drift', `${xDrift}px`);
+      bubble.style.setProperty('--float-time', `${duration}s`);
+      
+      document.getElementById('bubbles').appendChild(bubble);
+      
+      // Remove bubble after animation completes
+      setTimeout(() => {
+        bubble.remove();
+      }, duration * 1000);
+    }
+
+    // Create initial batch of bubbles
+    for(let i = 0; i < 50; i++) {
+      setTimeout(createBubble, Math.random() * 5000);
+    }
+
+    // Continue creating bubbles at intervals
+    setInterval(createBubble, 300);
+  </script>
+</body></html>
